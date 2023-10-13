@@ -1,16 +1,17 @@
 import 'package:http/http.dart' as http;
-import 'dart:io';
-class HttpHelper {
-  final String _urlKey = "?api_key=894efe1565f1f4915ca5642d6a35fc1f";
-  final String _urlBase = "https://api.themoviedb.org/";
 
-Future<String> getMovie() async{
-  var url = Uri.parse(_urlBase + "3/movie/now_playing?language=en-US&page=1" + _urlKey);
-  http.Response result = await http.get(url);
-  if (result.statusCode == HttpStatus.ok) {
-    String responseBody = result.body;
-    return responseBody;
+class HttpHelper {
+  final String _apiKey = "27bcadec218596d009a17c5ffab8d387";
+  final String _baseUrl = "https://api.themoviedb.org/3/movie";
+
+  Future<String> getMoviesByCategory(String category) async {
+    final String url = '$_baseUrl/$category?api_key=$_apiKey';
+    final http.Response response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return 'Failed to fetch data';
+    }
   }
-  return result.statusCode.toString();
-}
 }
