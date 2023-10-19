@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 
 class HttpHelper {
@@ -8,7 +10,7 @@ class HttpHelper {
     final String url = '$_baseUrl/$category?api_key=$_apiKey';
     final http.Response response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return response.body;
     } else {
       return 'Failed to fetch data';
